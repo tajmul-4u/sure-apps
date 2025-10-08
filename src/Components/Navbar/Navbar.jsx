@@ -6,21 +6,17 @@ import { Link } from 'react-router';
 const Navbar = () => {
   const links = (
     <>
-      <Link to={"/"}>
-        <li>
-          <a>Home</a>
-        </li>
-      </Link>
-      <Link to={"/apps"}>
-        <li>
-          <a>Apps</a>
-        </li>
-      </Link>
-      <Link to={"/installation"}>
-        <li>
-          <a>Installation</a>
-        </li>
-      </Link>
+      <li>
+        <Link to={"/"}>Home</Link>
+      </li>
+
+      <li>
+        <Link to={"/apps"}>Apps</Link>
+      </li>
+
+      <li>
+        <Link to={"/installation"}>Installation</Link>
+      </li>
     </>
   );
     return (
@@ -78,6 +74,7 @@ const Navbar = () => {
           </a>
         </div>
       </div>
+       
     );
 };
 
