@@ -5,6 +5,7 @@ import Home from "../Pages/Home/Home";
 import Apps from "../Pages/Apps/Apps";
 import ErrorPages from "../Pages/ErrorPages/ErrorPages";
 import Installation from "../Pages/Installation/Installation";
+import AppDetails from "../Pages/AppDetails/AppDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         {
           path:"/installation",
           Component:Installation
+        },
+        {
+          path:'/appDetails/:id',
+          element:<AppDetails></AppDetails>
         }
     ]
   },

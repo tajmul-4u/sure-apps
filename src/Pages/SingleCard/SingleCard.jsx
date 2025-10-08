@@ -1,6 +1,7 @@
 import React from 'react';
 import downloadIcon from "../../assets/icon-downloads.png";
 import ratingIcon from "../../assets/icon-ratings.png";
+import { useNavigate } from 'react-router';
 
 
  /* 
@@ -27,19 +28,21 @@ import ratingIcon from "../../assets/icon-ratings.png";
 
 */
 const SingleCard = ({ appCard }) => {
-    console.log(appCard)
+  const navigate=useNavigate();
+    // console.log(appCard)
   const { title, image, description, downloads, ratingAvg } = appCard;
   return (
     <div>
-      <div className="card bg-base-100  shadow-sm w-full h-[500px] p-6">
+      <div
+        onClick={() => navigate(`/appDetails/${appCard.id}`)}
+        className="card bg-base-100  shadow-sm w-full h-[500px] p-6 hover:scale-105 transition ease-in-out"
+      >
         <figure>
-          <img src={image} alt="Shoes" />
+          <img className="w-[150px]" src={image} alt="" />
         </figure>
         <div className="card-body">
           <h2 className="card-title">{title}</h2>
-          <p>
-             {description}
-          </p>
+          <p>{description}</p>
           <div className="card-actions justify-between">
             <div className="badge badge-outline">
               <img className="w-[15px]" src={downloadIcon} alt="" />

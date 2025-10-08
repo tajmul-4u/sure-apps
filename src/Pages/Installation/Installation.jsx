@@ -1,6 +1,9 @@
 import React from 'react';
+import useApps from '../../Components/Hook/useApps';
 
 const Installation = () => {
+    const data=useApps()
+    console.log(data)
     return (
       <div>
         <div className='text-center mt-2 mb-3'>
