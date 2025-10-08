@@ -14,6 +14,44 @@ const AppDetails = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return alert("app not found");
   const { title, image, description, downloads, ratingAvg, companyName } = app;
+
+//   add to installed
+const handleInstalledList = () => {
+  try {
+     
+    const stored = localStorage.getItem("installedList");
+    let existingList = [];
+
+    if (stored) {
+      const parsed = JSON.parse(stored);
+       
+      if (Array.isArray(parsed)) {
+        existingList = parsed;
+      } else {
+        console.warn("installedList was not an array, resetting...");
+        existingList = [];
+      }
+    }
+
+    //duplicates
+    const isAlreadyInstalled = existingList.some((item) => item.id === app.id);
+
+    if (isAlreadyInstalled) {
+      alert("App is already installed!");
+      return;
+    }
+
+    // Add new app
+    const updatedList = [...existingList, app];
+    localStorage.setItem("installedList", JSON.stringify(updatedList));
+
+    alert(`${app.title} installed successfully!`);
+  } catch (error) {
+    console.error("Error handling installed list:", error);
+    localStorage.removeItem("installedList"); 
+  }
+};
+
   return (
     <div className="flex flex-col gap-6 p-4 md:p-6 bg-base-100 shadow-lg rounded-2xl hover:shadow-xl transition-shadow duration-300">
       {/* Top card section */}
@@ -34,7 +72,7 @@ const AppDetails = () => {
               <h2 className="text-xl md:text-2xl font-semibold">{title}</h2>
               <p className="text-gray-500">{companyName}</p>
             </div>
-            <button className="btn btn-primary btn-sm md:btn-md">
+            <button onClick={handleInstalledList} className="btn btn-primary btn-sm md:btn-md">
               Install Now
             </button>
           </div>
