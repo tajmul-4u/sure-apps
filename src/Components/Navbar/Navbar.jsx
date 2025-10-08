@@ -1,8 +1,28 @@
 import React from 'react';
 import { FaGithub } from "react-icons/fa";
 import logo from "../../assets/logo.png"
+import { Link } from 'react-router';
 
 const Navbar = () => {
+  const links = (
+    <>
+      <Link to={"/"}>
+        <li>
+          <a>Home</a>
+        </li>
+      </Link>
+      <Link to={"/apps"}>
+        <li>
+          <a>Apps</a>
+        </li>
+      </Link>
+      <Link to={"/installation"}>
+        <li>
+          <a>Installation</a>
+        </li>
+      </Link>
+    </>
+  );
     return (
       <div className="navbar bg-base-100 shadow-sm">
         <div className="navbar-start">
@@ -39,22 +59,16 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost lg:text-3xl text-2xl text-[#632EE3] items-center">
-            <img className="w-[50px] h-[50px]" src={logo} alt="" />
-            Sure.Apps
+          <a className="btn btn-ghost flex items-center">
+            <img className="w-[35px] h-[35px] md:w-[50px] md:h-[50px]" src={logo} alt="" />
+            <span className="text-xl md:text-3xl text-[#632EE3] text-bold">
+              Sure.Apps
+            </span>
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-4 text-xl">
-            <li>
-              <a>Home</a>
-            </li>
-            <li>
-              <a>Apps</a>
-            </li>
-            <li>
-              <a>Installation</a>
-            </li>
+            {links}
           </ul>
         </div>
         <div className="navbar-end">
