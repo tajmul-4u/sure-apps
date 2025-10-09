@@ -3,8 +3,10 @@ import downloadIcon from "../../assets/icon-downloads.png";
 import ratingIcon from "../../assets/icon-ratings.png";
 import { useParams } from "react-router";
 import useApps from "../../Components/Hook/useApps";
+import ReviewChart from "../ChartRating/ReviewChart";
 
 const AppDetails = () => {
+  
   const { id } = useParams();
   const { apps, loading, error } = useApps();
   // console.log(params)
@@ -14,6 +16,13 @@ const AppDetails = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return alert("app not found");
   const { title, image, description, downloads, ratingAvg, companyName } = app;
+  // console.log("Ratings data:", app.ratings, Array.isArray(app.ratings));
+ const formattedRatings = Object.entries(app.ratings).map(([name, count]) => ({
+   name,
+   count,
+ }));
+
+console.log(formattedRatings)
 
 //   add to installed
 const handleInstalledList = () => {
@@ -72,7 +81,10 @@ const handleInstalledList = () => {
               <h2 className="text-xl md:text-2xl font-semibold">{title}</h2>
               <p className="text-gray-500">{companyName}</p>
             </div>
-            <button onClick={handleInstalledList} className="btn btn-primary btn-sm md:btn-md">
+            <button
+              onClick={handleInstalledList}
+              className="btn btn-primary btn-sm md:btn-md"
+            >
               Install Now
             </button>
           </div>
@@ -107,7 +119,10 @@ const handleInstalledList = () => {
           </div>
         </div>
       </div>
-
+      {/* Bar chart */}
+      <div className="mt-6">
+        <ReviewChart ratings={formattedRatings}></ReviewChart>
+      </div>
       {/* Description */}
       <div className="border-t pt-4">
         <h1 className="text-lg font-semibold mb-1">Description</h1>
