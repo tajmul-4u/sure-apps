@@ -1,16 +1,14 @@
-# React + Vite
+ ## Summary of the application
+ This project show the all trending and the versatile applications all over the world.Easily find the top apps here.
+ Mobile responsive modern style and the install the apps for the purpose of users.
+ Even the users uninstall the application in this site.And so the duplicate apps hinders and  show the display.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ ## Technology Stuck 
+ Main technology is used react library.Basically react base website.And so tailwindcss style and the Daisy ui style .
+ Spinner use modern and react toastify used
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+ ## Storage
+ LocalStorage is used this application locally.
+ # deployment
+ The react application is deploy the vercel official deploy this project.
+ Link this project:
