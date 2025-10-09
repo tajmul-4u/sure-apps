@@ -15,6 +15,7 @@ const router = createBrowserRouter([
         {
             path:"/",
             loader:()=>fetch('homeData.json'),
+            hydrateFallback: <p>Loading...</p>,
             Component:Home
         },
         {

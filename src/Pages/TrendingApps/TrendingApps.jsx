@@ -1,10 +1,17 @@
-import React from 'react';
-import SingleCard from '../SingleCard/SingleCard';
-import { Link } from 'react-router';
+import React from "react";
+import SingleCard from "../SingleCard/SingleCard";
+import { Link, useNavigate } from "react-router";
 
 const TrendingApps = ({ homeData }) => {
   // console.log(homeData)
-   
+  const navigate = useNavigate();
+  const handleShowAllApps = () => {
+    navigate("/apps");
+  };
+const allApps = [
+  ...(Array.isArray(homeData.featured) ? homeData.featured : []),
+  ...(Array.isArray(homeData.apps) ? homeData.apps : []),
+];
 
   return (
     <div className="text-center mt-4">
@@ -21,7 +28,10 @@ const TrendingApps = ({ homeData }) => {
           ))}
         </div>
       </div>
-      <button className="btn bg-[#632EE3] text-xl text-white rounded-2xl mt-6 mb-4">
+      <button
+        onClick={handleShowAllApps}
+        className="btn bg-[#632EE3] text-xl text-white rounded-2xl mt-6 mb-4"
+      >
         Show All
       </button>
     </div>

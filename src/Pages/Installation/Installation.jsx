@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import downloadIcon from "../../assets/icon-downloads.png";
 import ratingIcon from "../../assets/icon-ratings.png";
+import useApps from '../../Components/Hook/useApps';
+import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 
 const Installation = () => {
   const [installed, setInstalled] = useState([]);
@@ -46,6 +48,11 @@ const Installation = () => {
       localStorage.removeItem("installedList"); // clear corrupted data
     }
   };
+
+  // spinner
+  const { loading } = useApps();
+
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div>

@@ -56,25 +56,31 @@ const Navbar = () => {
             </ul>
           </div>
           <a className="btn btn-ghost flex items-center">
-            <img className="w-[35px] h-[35px] md:w-[50px] md:h-[50px]" src={logo} alt="" />
+            <img
+              className="w-[35px] h-[35px] md:w-[50px] md:h-[50px]"
+              src={logo}
+              alt=""
+            />
             <span className="text-xl md:text-3xl text-[#632EE3] text-bold">
               Sure.Apps
             </span>
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 gap-4 text-xl">
-            {links}
-          </ul>
+          <ul className="menu menu-horizontal px-1 gap-4 text-xl">{links}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn bg-[#632EE3] text-xl text-white">
+          <a
+            href="https://github.com/tajmul-4u" // 🔗 your repo URL
+            target="_blank" // 🪟 opens in new tab
+            rel="noopener noreferrer" // 🛡️ security best practice
+            className="btn bg-[#632EE3] text-xl text-white gap-2 hover:bg-[#5120c0]"
+          >
             <FaGithub />
             Contribute
           </a>
         </div>
       </div>
-       
     );
 };
 

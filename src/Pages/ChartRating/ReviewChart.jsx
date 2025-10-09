@@ -5,10 +5,12 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
 } from "recharts";
 
 const ReviewChart = ({ ratings }) => {
+    console.log(typeof(ratings))
   if (!Array.isArray(ratings) || ratings.length === 0) {
     return (
       <div className="w-full h-64 flex items-center justify-center bg-base-100 rounded-lg shadow">
@@ -17,29 +19,32 @@ const ReviewChart = ({ ratings }) => {
     );
   }
 
-  // Convert count to number
-  const validatedRatings = ratings.map((r) => ({
-    name: r.name || "Unknown",
-    count: Number(r.count) || 0,
+   const formattedRatings = ratings.map((r) => ({
+    name: r.name || "N/A",
+    count:
+      typeof r.count === "object"
+        ? Number(Object.values(r.count)[0]) || 0
+        : Number(r.count) || 0,
   }));
+
+  
 
   return (
     <div className="w-full bg-base-100 shadow-md rounded-xl p-6 space-y-6">
       <h2 className="text-xl font-semibold text-center text-gray-700">
-        ⭐ User Rating Distribution
+        User Rating Distribution
       </h2>
+
       <div className="w-full h-80">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={validatedRatings}
-            margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+            data={formattedRatings}
+            margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-            <XAxis dataKey="name" tick={{ fill: "#4b5563", fontSize: 14 }} />
-            <YAxis
-              tick={{ fill: "#4b5563", fontSize: 14 }}
-              allowDecimals={false}
-            />
+            <XAxis dataKey="name" tick={{ fill: "#4b5563" }} />
+            <YAxis tick={{ fill: "#4b5563" }} allowDecimals={false} />
+            <Tooltip />
             <Bar
               dataKey="count"
               fill="#6366F1"

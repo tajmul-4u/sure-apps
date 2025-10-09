@@ -4,6 +4,7 @@ import ratingIcon from "../../assets/icon-ratings.png";
 import { useParams } from "react-router";
 import useApps from "../../Components/Hook/useApps";
 import ReviewChart from "../ChartRating/ReviewChart";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 
 const AppDetails = () => {
   
@@ -13,16 +14,17 @@ const AppDetails = () => {
   const app = apps.find((p) => String(p.id) === id);
   // console.log(app)
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (error) return alert("app not found");
   const { title, image, description, downloads, ratingAvg, companyName } = app;
   // console.log("Ratings data:", app.ratings, Array.isArray(app.ratings));
- const formattedRatings = Object.entries(app.ratings).map(([name, count]) => ({
-   name,
-   count,
- }));
+const formattedRatings = app.ratings.map((item) => ({
+  name: item.name,
+  count: Number(item.count), 
+}));
 
-console.log(formattedRatings)
+
+// console.log(formattedRatings)
 
 //   add to installed
 const handleInstalledList = () => {

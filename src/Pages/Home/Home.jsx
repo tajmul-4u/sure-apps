@@ -1,21 +1,23 @@
-import React, { Suspense} from 'react';
-import Banner from '../Banner/Banner';
-import TrendingApps from '../TrendingApps/TrendingApps';
-import { useLoaderData } from 'react-router';
+import React, { Suspense } from "react";
+import Banner from "../Banner/Banner";
+import TrendingApps from "../TrendingApps/TrendingApps";
+import useApps from "../../Components/Hook/useApps";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 
 const Home = () => {
-    const homeData=useLoaderData();
-    // console.log(homeData)
+  const { apps, loading, error } = useApps(); // fetches app data
 
-    
-    return (
-      <div>
-        <Banner></Banner>
-        <Suspense fallback={<span>Loading data...</span>}>
-          <TrendingApps homeData={homeData}></TrendingApps>
-        </Suspense>
-      </div>
-    );
+  if (loading) return <LoadingSpinner />; // show spinner while loading
+  if (error) return <p className="text-red-500">Error: {error}</p>;
+
+  return (
+    <div>
+      <Banner />
+      <Suspense fallback={<span>Loading data...</span>}>
+        <TrendingApps homeData={apps} />
+      </Suspense>
+    </div>
+  );
 };
 
 export default Home;
