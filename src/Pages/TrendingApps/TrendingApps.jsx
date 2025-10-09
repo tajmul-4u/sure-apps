@@ -8,10 +8,7 @@ const TrendingApps = ({ homeData }) => {
   const handleShowAllApps = () => {
     navigate("/apps");
   };
-const allApps = [
-  ...(Array.isArray(homeData.featured) ? homeData.featured : []),
-  ...(Array.isArray(homeData.apps) ? homeData.apps : []),
-];
+ 
 
   return (
     <div className="text-center mt-4">

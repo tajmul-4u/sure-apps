@@ -3,6 +3,7 @@ import { Link, useLoaderData } from 'react-router';
 import AppCard from '../AppCard/AppCard';
 import useApps from '../../Components/Hook/useApps';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
+import { toast } from 'react-toastify';
 
 const Apps = () => {
     const allApps=useLoaderData()
@@ -15,7 +16,7 @@ const searchApp=term?allApps.filter(app=>app.title.toLowerCase().includes(term))
       const {loading, error } = useApps();
 
       if (loading) return <LoadingSpinner></LoadingSpinner>;
-      if (error) return alert("app not found");
+      if (error) return toast("app not found");
     return (
        
         <div>

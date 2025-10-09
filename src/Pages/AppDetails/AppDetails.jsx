@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import useApps from "../../Components/Hook/useApps";
 import ReviewChart from "../ChartRating/ReviewChart";
 import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
+import { toast } from "react-toastify";
 
 const AppDetails = () => {
   
@@ -48,7 +49,7 @@ const handleInstalledList = () => {
     const isAlreadyInstalled = existingList.some((item) => item.id === app.id);
 
     if (isAlreadyInstalled) {
-      alert("App is already installed!");
+      toast("App is already installed!");
       return;
     }
 
@@ -56,7 +57,7 @@ const handleInstalledList = () => {
     const updatedList = [...existingList, app];
     localStorage.setItem("installedList", JSON.stringify(updatedList));
 
-    alert(`${app.title} installed successfully!`);
+    toast(`${app.title} installed successfully!`);
   } catch (error) {
     console.error("Error handling installed list:", error);
     localStorage.removeItem("installedList"); 

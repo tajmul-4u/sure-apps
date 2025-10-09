@@ -3,7 +3,7 @@ import React from "react";
 const BannerCard = () => {
   return (
     <div>
-      <div className=" bg-[#632EE3] p-25 text-white">
+      <div className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] p-6 text-white">
         <h1 className="text-4xl font-bold text-center">
           Trusted By Millions,Build for You
         </h1>
