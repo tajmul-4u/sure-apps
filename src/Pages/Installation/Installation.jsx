@@ -3,6 +3,7 @@ import downloadIcon from "../../assets/icon-downloads.png";
 import ratingIcon from "../../assets/icon-ratings.png";
 import useApps from '../../Components/Hook/useApps';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
+import { toast } from 'react-toastify';
 
 const Installation = () => {
   const [installed, setInstalled] = useState([]);
@@ -24,30 +25,25 @@ const Installation = () => {
       return installed;
     }
   };
+  
   // Uninstall apps
-  // Uninstall apps
-  const handleRemoveApp = (id) => {
-    try {
-      const stored = localStorage.getItem("installedList");
-      const existingList = stored ? JSON.parse(stored) : [];
+ const handleRemoveApp = (id) => {
+   try {
+     const stored = localStorage.getItem("installedList");
+     const existingList = stored ? JSON.parse(stored) : [];
 
-      if (!Array.isArray(existingList)) {
-        console.warn(
-          "Invalid data in localStorage. Resetting installed list..."
-        );
-        localStorage.removeItem("installedList");
-        return;
-      }
+     if (!Array.isArray(existingList)) return;
 
-      const updatedList = existingList.filter((p) => p.id !== id);
-      setInstalled(updatedList);
+     const updatedList = existingList.filter((p) => p.id !== id);
+     localStorage.setItem("installedList", JSON.stringify(updatedList));
+     setInstalled(updatedList);
 
-      localStorage.setItem("installedList", JSON.stringify(updatedList));
-    } catch (error) {
-      console.error("Error removing app:", error);
-      localStorage.removeItem("installedList"); // clear corrupted data
-    }
-  };
+     toast("App uninstalled successfully!");
+   } catch (error) {
+     console.error("Error removing app:", error);
+     localStorage.removeItem("installedList");
+   }
+ };
 
   // spinner
   const { loading } = useApps();

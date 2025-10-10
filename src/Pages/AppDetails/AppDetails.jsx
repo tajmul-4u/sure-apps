@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import downloadIcon from "../../assets/icon-downloads.png";
 import ratingIcon from "../../assets/icon-ratings.png";
 import { useParams } from "react-router";
@@ -8,61 +8,77 @@ import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import { toast } from "react-toastify";
 
 const AppDetails = () => {
-  
   const { id } = useParams();
   const { apps, loading, error } = useApps();
-  // console.log(params)
+
   const app = apps.find((p) => String(p.id) === id);
-  // console.log(app)
 
-  if (loading) return <LoadingSpinner></LoadingSpinner>;
-  if (error) return alert("app not found");
-  const { title, image, description, downloads, ratingAvg, companyName } = app;
-  // console.log("Ratings data:", app.ratings, Array.isArray(app.ratings));
-const formattedRatings = app.ratings.map((item) => ({
-  name: item.name,
-  count: Number(item.count), 
-}));
+  const [installed, setInstalled] = useState(false);
 
-
-// console.log(formattedRatings)
-
-//   add to installed
-const handleInstalledList = () => {
-  try {
-     
+  // 🧩 Check installed state on mount
+  useEffect(() => {
     const stored = localStorage.getItem("installedList");
-    let existingList = [];
-
     if (stored) {
-      const parsed = JSON.parse(stored);
-       
-      if (Array.isArray(parsed)) {
-        existingList = parsed;
-      } else {
-        console.warn("installedList was not an array, resetting...");
-        existingList = [];
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          const isAlreadyInstalled = parsed.some((item) => item.id === app?.id);
+          setInstalled(isAlreadyInstalled);
+        }
+      } catch (err) {
+        console.error("Error reading installedList:", err);
       }
     }
+  }, [app?.id]);
 
-    //duplicates
-    const isAlreadyInstalled = existingList.some((item) => item.id === app.id);
+  if (loading) return <LoadingSpinner />;
+  if (error || !app) return alert("App not found");
 
-    if (isAlreadyInstalled) {
-      toast("App is already installed!");
-      return;
+  const { title, image, description, downloads, ratingAvg, companyName } = app;
+  const formattedRatings = app.ratings?.map((item) => ({
+    name: item.name,
+    count: Number(item.count),
+  }));
+
+  //   ✅ Add/Remove from installed list
+  const handleInstalledList = () => {
+    try {
+      const stored = localStorage.getItem("installedList");
+      let existingList = [];
+
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          existingList = parsed;
+        } else {
+          console.warn("installedList was not an array, resetting...");
+        }
+      }
+
+      const isAlreadyInstalled = existingList.some(
+        (item) => item.id === app.id
+      );
+      let updatedList;
+
+      if (isAlreadyInstalled) {
+        // 🔄 Uninstall
+        updatedList = existingList.filter((item) => item.id !== app.id);
+        localStorage.setItem("installedList", JSON.stringify(updatedList));
+        toast(`${app.title} uninstalled successfully!`);
+        setInstalled(false);
+      } else {
+        // ✅ Install
+        updatedList = [...existingList, app];
+        localStorage.setItem("installedList", JSON.stringify(updatedList));
+        toast(`${app.title} installed successfully!`);
+        setInstalled(true);
+      }
+    } catch (error) {
+      console.error("Error handling installed list:", error);
+      localStorage.removeItem("installedList");
     }
+  };
 
-    // Add new app
-    const updatedList = [...existingList, app];
-    localStorage.setItem("installedList", JSON.stringify(updatedList));
-
-    toast(`${app.title} installed successfully!`);
-  } catch (error) {
-    console.error("Error handling installed list:", error);
-    localStorage.removeItem("installedList"); 
-  }
-};
 
   return (
     <div className="flex flex-col gap-6 p-4 md:p-6 bg-base-100 shadow-lg rounded-2xl hover:shadow-xl transition-shadow duration-300">
@@ -86,9 +102,12 @@ const handleInstalledList = () => {
             </div>
             <button
               onClick={handleInstalledList}
-              className="btn btn-primary btn-sm md:btn-md"
+              className={`btn btn-primary btn-sm md:btn-md ${
+                installed ? "btn-success" : ""
+              }`}
+              disabled={installed}
             >
-              Install Now
+              {installed ? "Installed" : "Install Now"}
             </button>
           </div>
 
